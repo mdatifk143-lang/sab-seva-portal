@@ -3,640 +3,797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Sab Seva Print Portal</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #eef3fa;
-  color: #263447;
-}
-
-header {
-  background: #1456b8;
-  color: white;
-  text-align: center;
-  padding: 25px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 35px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-.heading {
-  text-align: center;
-  color: #1456b8;
-  font-size: 27px;
-  font-weight: bold;
-  margin: 25px 0;
-}
-
-.contact {
-  display: block;
-  background: #e4ffec;
-  color: #086b36;
-  text-align: center;
-  padding: 14px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.services {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-}
-
-.card {
-  background: white;
-  padding: 23px;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px #ccd5e2;
-  text-align: center;
-}
-
-.card h3 {
-  color: #1456b8;
-}
-
-.card p {
-  line-height: 1.6;
-}
-
-button, .btn {
-  background: #1456b8;
-  color: white;
-  border: none;
-  border-radius: 7px;
-  padding: 12px 18px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 8px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 7px;
-}
-
-.hidden {
-  display: none;
-}
-
-.login-box {
-  max-width: 420px;
-  margin: 35px auto;
-}
-
-#message {
-  text-align: center;
-  color: #b42318;
-  padding: 10px;
-}
-
-.chat-box {
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  width: 270px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 3px 15px #aaa;
-  overflow: hidden;
-}
-
-.chat-heading {
-  background: #1456b8;
-  color: white;
-  padding: 13px;
-  font-weight: bold;
-}
-
-.chat-content {
-  padding: 15px;
-  text-align: center;
-}
-
-.chat-content a {
-  display: block;
-  background: #128c50;
-  color: white;
-  padding: 12px;
-  border-radius: 7px;
-  text-decoration: none;
-}
-
-.note {
-  font-size: 13px;
-  color: #657184;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-}
-
-@media(max-width: 500px) {
-  .heading {
-    font-size: 22px;
-  }
-
-  .chat-box {
-    width: 220px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef3fa;color:#243247}
+header{background:#124c92;color:white;padding:20px;text-align:center}
+header h1{margin:0;font-size:26px}
+header p{margin-bottom:0}
+main{max-width:1050px;margin:auto;padding:15px}
+.box{background:white;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 10px #00000012}
+h2,h3{color:#124c92}
+input,select,textarea{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #cbd5e1;border-radius:7px;font-size:15px}
+button{background:#1257a5;color:white;border:0;border-radius:7px;padding:12px 16px;cursor:pointer;margin:5px 4px 5px 0;font-size:15px}
+button:disabled{background:#999;cursor:not-allowed}
+.green{background:#168447}
+.secondary{background:#64748b}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.service{border:1px solid #dce5f0;background:#f8fbff;padding:14px;border-radius:10px;text-align:center}
+.service h3{font-size:16px}
+.badge{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;margin:8px}
+.available{background:#dcfce7;color:#166534}
+.soon{background:#fef3c7;color:#92400e}
+.wallet{font-size:28px;font-weight:bold;color:#168447}
+.qr{display:block;width:280px;max-width:100%;height:auto;margin:18px auto;padding:10px;border:2px solid #ddd;border-radius:12px;background:white}
+.notice{background:#fff7df;padding:13px;border-radius:8px;margin:12px 0;line-height:1.6}
+#message{margin:12px 0;font-weight:bold;white-space:pre-wrap}
+.payment-area{text-align:center;padding:15px;background:#f8fbff;border-radius:12px;margin-bottom:18px}
+footer{text-align:center;padding:20px;color:#64748b}
+a{color:#1257a5}
+.field-label{display:block;font-weight:bold;margin-top:8px}
+.form-actions{margin-top:12px}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
-
 <header>
-  <h1>Sab Seva</h1>
-  <p>Print Portal</p>
+<h1>Sab Seva Print Portal</h1>
+<p>Retailer Services | 24/7 Support</p>
 </header>
 
-<div class="container">
+<main>
+<div id="message" role="status"></div>
 
-<a class="contact"
-   href="https://wa.me/918986563184"
-   target="_blank"
-   rel="noopener">
-  WhatsApp Contact: 8986563184
-</a>
+<section id="loginPage" class="box">
+<h2>Retailer Login</h2>
+<label>Email</label>
+<input id="loginEmail" type="email" placeholder="Registered Email">
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<button class="secondary" onclick="showRegister()">New Retailer Registration</button>
+<p><a href="#" onclick="forgotPassword();return false;">Forgot Password?</a></p>
+</section>
 
-<h2 class="heading">
-  WITHOUT DOCUMENT, ONLY AADHAAR CARD
-</h2>
+<section id="registerPage" class="box hidden">
+<h2>New Retailer Registration</h2>
+<label>Retailer Name</label>
+<input id="regName" placeholder="Full Name">
+<label>Email</label>
+<input id="regEmail" type="email" placeholder="Email">
+<label>Password</label>
+<input id="regPassword" type="password" placeholder="Minimum 6 Characters">
+<button onclick="register()">Register</button>
+<button class="secondary" onclick="showLogin()">Back to Login</button>
+</section>
 
-<p class="note" style="text-align:center">
-  New PAN Card सेवा के लिए।
-  आवश्यक दस्तावेज आधिकारिक नियमों के अनुसार होंगे।
+<section id="dashboard" class="hidden">
+<div class="box">
+<h2>Retailer Dashboard</h2>
+<p id="retailerName"></p>
+<h3>Wallet Balance</h3>
+<div id="walletBalance" class="wallet">₹0.00</div>
+<br>
+<button class="green" onclick="showSection('addMoney')">Add Money</button>
+<button onclick="showSection('servicesSection')">Services</button>
+<button onclick="showSection('applicationsSection')">My Applications</button>
+<button class="secondary" onclick="logout()">Logout</button>
+</div>
+
+<section id="addMoney" class="box hidden">
+<h2>Add Money — PhonePe</h2>
+<div class="payment-area">
+<h3>Scan & Pay — PhonePe</h3>
+<img src="phonepe-qr.jpg" alt="PhonePe QR Code" class="qr" id="phonepeQR">
+<p id="qrError" style="color:red;display:none">
+QR फोटो नहीं मिली। phonepe-qr.jpg को index.html वाले फोल्डर में रखें।
 </p>
-
-<h2 style="text-align:center">Our Services</h2>
-
-<div class="services">
-
-<!-- NEW PAN CARD -->
-
-<div class="card">
-  <h3>New PAN Card</h3>
-  <p>Only Aadhaar Card</p>
-
-  <p>
-    Aadhaar Card<br>
-    Photo<br>
-    Signature<br>
-    Mobile Number<br>
-    Email
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=New%20PAN%20Card"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
+<p>PhonePe से QR Scan करके Payment करें।</p>
 </div>
 
-<!-- PAN CORRECTION -->
-
-<div class="card">
-  <h3>PAN Card Correction</h3>
-
-  <p>
-    PAN Card में सुधार के लिए संपर्क करें।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=PAN%20Card%20Correction"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
+<div class="notice">
+Payment करने से पहले Receiver का नाम जरूर Verify करें।
+<br><br>
+Payment करने के बाद UTR और Screenshot अपलोड करें।
+<br><br>
+Admin Approval के बाद ही Wallet Balance बढ़ेगा।
 </div>
 
-<!-- AADHAAR TO PDF -->
+<label>Amount ₹</label>
+<input id="payAmount" type="number" min="1" step="1" placeholder="Enter Amount">
+<label>UTR / Transaction ID</label>
+<input id="payUtr" placeholder="Enter UTR / Transaction ID">
+<label>Payment Screenshot</label>
+<input id="payScreenshot" type="file" accept="image/jpeg,image/png,image/webp">
+<button id="paySubmitBtn" onclick="submitPayment()">Submit Payment Request</button>
+<button class="secondary" onclick="showSection('servicesSection')">Back</button>
+</section>
 
-<div class="card">
-  <h3>Aadhaar Number to PDF</h3>
+<section id="servicesSection" class="box">
+<h2>Our Services</h2>
+<div id="servicesGrid" class="grid">Loading Services...</div>
+</section>
 
-  <p>
-    Aadhaar PDF डाउनलोड प्रक्रिया में सहायता।
-    अधिकृत OTP सत्यापन आवश्यक है।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=Aadhaar%20Number%20to%20PDF"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
+<section id="serviceDetails" class="box hidden">
+<h2 id="selectedServiceName"></h2>
+<p id="selectedServiceRate"></p>
+<div class="notice">
+यह फॉर्म अभी Testing Mode में है। Test करने पर कोई असली आवेदन जमा नहीं होगा और Wallet से पैसे नहीं कटेंगे।
 </div>
-
-<!-- EID SERVICE -->
-
-<div class="card">
-  <h3>EID Number to Aadhaar Number &amp; PDF</h3>
-
-  <p>
-    EID से Aadhaar Status और PDF
-    डाउनलोड संबंधी सहायता।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=EID%20to%20Aadhaar%20PDF"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
+<form id="serviceForm">
+<div id="serviceFields"></div>
+<div class="form-actions">
+<button type="submit" class="green">Test Application Form</button>
+<button type="button" class="secondary" onclick="showSection('servicesSection')">Back to Services</button>
 </div>
+</form>
+<p id="formTestResult" role="status"></p>
+</section>
 
-<!-- RATION TO AADHAAR -->
+<section id="applicationsSection" class="box hidden">
+<h2>My Applications</h2>
+<div id="applicationList">Loading...</div>
+</section>
+</section>
 
-<div class="card">
-  <h3>Ration Number to Aadhaar Number</h3>
+<section class="box">
+<h3>Customer Support</h3>
+<p>किसी भी प्रकार की समस्या होने पर WhatsApp पर मैसेज करें।</p>
+<a href="https://wa.me/918986563184" target="_blank" rel="noopener">
+WhatsApp: 8986563184
+</a>
+</section>
+</main>
 
-  <p>
-    अधिकृत राशन-Aadhaar लिंक
-    स्थिति की जानकारी।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=Ration%20Number%20to%20Aadhaar"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
-</div>
-
-<!-- AADHAAR TO RATION -->
-
-<div class="card">
-  <h3>Aadhaar Number to Ration Number</h3>
-
-  <p>
-    राशन रिकॉर्ड और लिंक स्थिति
-    संबंधी सहायता।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=Aadhaar%20Number%20to%20Ration"
-     target="_blank"
-     rel="noopener">
-    Apply Now
-  </a>
-</div>
-
-<!-- PAYMENT SERVICE -->
-
-<div class="card">
-  <h3>Payment Service</h3>
-
-  <p>
-    Payment करने के लिए
-    WhatsApp पर संपर्क करें।
-  </p>
-
-  <a class="btn"
-     href="https://wa.me/918986563184?text=Payment%20Service"
-     target="_blank"
-     rel="noopener">
-    Payment Enquiry
-  </a>
-</div>
-
-</div>
-
-<!-- ADMIN LOGIN -->
-
-<div class="card login-box" id="login">
-
-  <h2>Admin Login</h2>
-
-  <input
-    id="email"
-    type="email"
-    placeholder="Admin Email"
-    autocomplete="username">
-
-  <input
-    id="password"
-    type="password"
-    placeholder="Password"
-    autocomplete="current-password">
-
-  <button onclick="loginAdmin()">
-    Login
-  </button>
-
-  <button onclick="forgotPassword()">
-    Forgot Password?
-  </button>
-
-</div>
-
-<!-- PASSWORD RESET -->
-
-<div class="card login-box hidden" id="reset">
-
-  <h2>Reset Your Password</h2>
-
-  <input
-    id="newPassword"
-    type="password"
-    placeholder="New Password">
-
-  <input
-    id="confirmPassword"
-    type="password"
-    placeholder="Confirm Password">
-
-  <button onclick="updatePassword()">
-    Update Password
-  </button>
-
-</div>
-
-<!-- ADMIN DASHBOARD -->
-
-<div class="card login-box hidden" id="dashboard">
-
-  <h2>Admin Dashboard</h2>
-
-  <p>Welcome to Sab Seva</p>
-
-  <p class="note">
-    Admin Login सफल है।
-  </p>
-
-  <button onclick="logout()">
-    Logout
-  </button>
-
-</div>
-
-<p id="message" role="status"></p>
-
-</div>
-
-<!-- CUSTOMER CHAT -->
-
-<div class="chat-box">
-
-  <div class="chat-heading">
-    Customer Chat
-  </div>
-
-  <div class="chat-content">
-
-    <p>Sab Seva से बात करें</p>
-
-    <a
-      href="https://wa.me/918986563184?text=Namaste%20Sab%20Seva"
-      target="_blank"
-      rel="noopener">
-      Chat on WhatsApp
-    </a>
-
-    <p class="note">
-      OTP, Password या पूरा Aadhaar Number
-      चैट में न भेजें।
-    </p>
-
-  </div>
-
-</div>
-
-<footer>
-  Sab Seva Print Portal
-</footer>
+<footer>© Sab Seva Print Portal</footer>
 
 <script>
+const SUPABASE_URL="https://nvpujnviuaqhncayfklz.supabase.co";
+const SUPABASE_KEY="sb_publishable_nHUllQOMS5anr8FqfoyCyw_GxNDu6gq";
 
-const SUPABASE_URL =
-  "https://nvpujnviuaqhncayfklz.supabase.co";
+let supabaseClient=null;
+let currentUser=null;
+let currentServices=[];
+let selectedService=null;
 
-const SUPABASE_KEY =
-  "sb_publishable_nHUllQOMS5anr8FqfoyCyw_GxNDu6gq";
+const $=id=>document.getElementById(id);
 
-let db = null;
+try{
+ if(!window.supabase)throw Error("Supabase Library Load Failed");
+ supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+}catch(e){console.error(e)}
 
-function show(page) {
+function message(text,isError=false){
+ const el=$("message");
+ el.textContent=text;
+ el.style.color=isError?"#b91c1c":"#166534";
+}
 
-  ["login", "reset", "dashboard"].forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+function hideAllPages(){
+ ["loginPage","registerPage","dashboard"].forEach(id=>$(id).classList.add("hidden"));
+}
+
+function showLogin(){
+ hideAllPages();
+ $("loginPage").classList.remove("hidden");
+ message("");
+}
+
+function showRegister(){
+ hideAllPages();
+ $("registerPage").classList.remove("hidden");
+ message("");
+}
+
+function showSection(id){
+ ["addMoney","servicesSection","applicationsSection","serviceDetails"].forEach(name=>{
+  $(name).classList.add("hidden");
+ });
+ $(id).classList.remove("hidden");
+ if(id==="applicationsSection")loadApplications();
+}
+
+function checkClient(){
+ if(!supabaseClient){
+  message("Supabase Connection Error",true);
+  return false;
+ }
+ return true;
+}
+
+async function register(){
+ if(!checkClient())return;
+ const name=$("regName").value.trim();
+ const email=$("regEmail").value.trim();
+ const password=$("regPassword").value;
+ if(!name||!email||password.length<6){
+  message("नाम, Email और कम से कम 6 अक्षर का Password डालें।",true);
+  return;
+ }
+ try{
+  const {data,error}=await supabaseClient.auth.signUp({
+   email,password,options:{data:{name}}
   });
+  if(error)throw error;
+  if(!data.session){
+   message("Registration Request बन गई। Email Confirmation चालू होने पर Email Verify करें।");
+   return;
+  }
+  currentUser=data.user;
+  await openDashboard();
+ }catch(e){message("Registration Error: "+e.message,true)}
+}
 
-  document.getElementById(page).classList.remove("hidden");
+async function login(){
+ if(!checkClient())return;
+ const email=$("loginEmail").value.trim();
+ const password=$("loginPassword").value;
+ if(!email||!password){
+  message("Email और Password डालें।",true);
+  return;
+ }
+ try{
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error)throw error;
+  currentUser=data.user;
+  await openDashboard();
+ }catch(e){message("Login Error: "+e.message,true)}
+}
 
+async function forgotPassword(){
+ if(!checkClient())return;
+ const email=$("loginEmail").value.trim();
+ if(!email){
+  message("पहले अपना Email डालें।",true);
+  return;
+ }
+ const {error}=await supabaseClient.auth.resetPasswordForEmail(email);
+ message(error?error.message:"अगर Email Registered है तो Password Reset Link भेजा जाएगा।",!!error);
+}
+
+async function logout(){
+ if(supabaseClient)await supabaseClient.auth.signOut();
+ currentUser=null;
+ showLogin();
+}
+
+async function openDashboard(){
+ if(!currentUser)return;
+ try{
+  const {data:admin,error:adminError}=await supabaseClient
+   .from("admin_users").select("user_id")
+   .eq("user_id",currentUser.id).maybeSingle();
+  if(adminError)throw adminError;
+  if(admin){
+   await supabaseClient.auth.signOut();
+   currentUser=null;
+   showLogin();
+   message("यह Admin Account है। Admin के लिए अलग Dashboard इस्तेमाल करें।",true);
+   return;
+  }
+
+  const {data:retailer,error:retailerError}=await supabaseClient
+   .from("retailers").select("name,status,retailer_id")
+   .eq("id",currentUser.id).maybeSingle();
+  if(retailerError)throw retailerError;
+  if(!retailer){
+   message("Retailer Profile नहीं मिली। Database Registration Setting जाँचनी होगी।",true);
+   return;
+  }
+  if(String(retailer.status).toLowerCase()!=="active"){
+   message("Retailer Account अभी Active नहीं है।",true);
+   return;
+  }
+
+  hideAllPages();
+  $("dashboard").classList.remove("hidden");
+  $("retailerName").textContent=retailer.name+" | "+(retailer.retailer_id||"");
   message("");
+  showSection("servicesSection");
+  await Promise.all([loadWallet(),loadServices()]);
+ }catch(e){message("Dashboard Error: "+e.message,true)}
 }
 
-function message(text) {
-  document.getElementById("message").textContent = text;
+async function loadWallet(){
+ if(!currentUser)return;
+ const {data,error}=await supabaseClient
+  .from("customer_wallets").select("balance_paise")
+  .eq("user_id",currentUser.id).maybeSingle();
+ if(error){
+  console.error(error);
+  $("walletBalance").textContent="Unavailable";
+  return;
+ }
+ $("walletBalance").textContent="₹"+(Number(data?.balance_paise||0)/100).toFixed(2);
 }
 
-try {
+const fallbackServices=[
+ {service_code:"new_pan",service_name:"New PAN Card",rate_paise:18000,status:"Available"},
+ {service_code:"pan_correction",service_name:"PAN Card Correction",rate_paise:18000,status:"Available"},
+ {service_code:"ayushman",service_name:"Ayushman Card",rate_paise:10000,status:"Available"},
+ {service_code:"new_voter",service_name:"New Voter ID Apply",rate_paise:12000,status:"Available"},
+ {service_code:"dl_pdf",service_name:"DL Number to PDF",rate_paise:4000,status:"Available"},
+ {service_code:"chassis_rc",service_name:"Chassis Number to RC",rate_paise:0,status:"Available"},
+ {service_code:"engine_rc",service_name:"Engine Number to RC",rate_paise:0,status:"Coming Soon"}
+];
 
-  db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-      detectSessionInUrl: true,
-persistSession: true,
-autoRefreshToken: true
-}
-}
-);
-} catch(error) {
-  message("Supabase Error: " + error.message);
+function isAvailable(service){
+ return ["available","active","live"].includes(String(service.status||"").toLowerCase());
 }
 
-async function isAdmin(user) {
-  if (!user || !db) return false;
+async function loadServices(){
+ const grid=$("servicesGrid");
+ grid.textContent="Loading...";
+ const {data,error}=await supabaseClient
+  .from("portal_services")
+  .select("service_code,service_name,rate_paise,status")
+  .order("created_at",{ascending:true});
 
-  const { data, error } = await db
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id", user.id)
-    .limit(1);
+ if(error)console.error("Service Load Error:",error);
+ currentServices=!error&&data&&data.length?data:fallbackServices;
+ grid.innerHTML="";
 
-  if (error) throw error;
-  return data && data.length > 0;
+ currentServices.forEach(service=>{
+  const card=document.createElement("div");
+  card.className="service";
+
+  const title=document.createElement("h3");
+  title.textContent=service.service_name;
+
+  const rate=document.createElement("p");
+  rate.textContent="₹"+(Number(service.rate_paise||0)/100).toFixed(2);
+
+  const available=isAvailable(service);
+  const badge=document.createElement("span");
+  badge.className="badge "+(available?"available":"soon");
+  badge.textContent=available?"Available":"Coming Soon";
+
+  const button=document.createElement("button");
+  button.textContent="Open Service";
+  button.disabled=!available;
+  button.onclick=()=>openService(service);
+
+  card.append(title,rate,badge,document.createElement("br"),button);
+  grid.appendChild(card);
+ });
 }
 
-async function loginAdmin() {
-  if (!db) return message("Connection Error");
+/* SERVICE FORM DEFINITIONS */
+const commonCustomer=[
+ ["Customer Name","text","customer_name"],
+ ["Mobile Number","tel","mobile"]
+];
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+const serviceForms={
+ new_pan:[
+  ["Customer Name","text","customer_name"],
+  ["Father Name","text","father_name"],
+  ["Mother Name","text","mother_name"],
+  ["Date of Birth","date","dob"],
+  ["Mobile Number","tel","mobile"],
+  ["Email","email","email"],
+  ["Full Address","textarea","address"],
+  ["Passport Photo","file","photo"],
+  ["Signature","file","signature"],
+  ["Aadhaar Document","file","aadhaar"]
+ ],
+ pan_correction:[
+  ["Customer Name","text","customer_name"],
+  ["PAN Number","text","pan_number"],
+  ["Father Name","text","father_name"],
+  ["Date of Birth","date","dob"],
+  ["Mobile Number","tel","mobile"],
+  ["Correction Type","select","correction_type",
+   ["Name","Father Name","Date of Birth","Address","Photo","Signature","Other"]],
+  ["Correct Details","textarea","correct_details"],
+  ["Full Address","textarea","address"],
+  ["Aadhaar Document","file","aadhaar"],
+  ["Photo","file","photo"],
+  ["Signature","file","signature"]
+ ],
+ ayushman:[
+  ["Customer Name","text","customer_name"],
+  ["Aadhaar Number","text","aadhaar_number"],
+  ["Ration Card Number","text","ration_number"],
+  ["Aadhaar Linked Mobile Number","tel","mobile"],
+  ["Customer Photo","file","photo"],
+  ["Aadhaar Document","file","aadhaar"]
+ ],
+ new_voter:[
+  ["Customer Name","text","customer_name"],
+  ["Father / Husband Name","text","guardian_name"],
+  ["Gender","select","gender",["Male","Female","Other"]],
+  ["Date of Birth","date","dob"],
+  ["Aadhaar Number","text","aadhaar_number"],
+  ["Mobile Number","tel","mobile"],
+  ["Full Address","textarea","address"],
+  ["Aadhaar Document","file","aadhaar"],
+  ["Passport Photo","file","photo"],
+  ["Signature","file","signature"],
+  ["Address Proof","file","address_proof"]
+ ],
+ dl_pdf:[
+  ["Customer Name","text","customer_name"],
+  ["DL Number","text","dl_number"],
+  ["Mobile Number","tel","mobile"]
+ ],
+ chassis_rc:[
+  ["Customer Name","text","customer_name"],
+  ["Chassis Number","text","chassis_number"],
+  ["Mobile Number","tel","mobile"]
+ ],
+ engine_rc:[
+  ["Customer Name","text","customer_name"],
+  ["Engine Number","text","engine_number"],
+  ["Mobile Number","tel","mobile"]
+ ]
+};
 
-  if (!email || !password) {
-    return message("Email और Password डालें");
-  }
+/* MATCH DATABASE SERVICE NAMES */
+function getServiceFields(service){
+ const code=String(service.service_code||"").toLowerCase();
+ const name=String(service.service_name||"").toLowerCase();
 
-  try {
-    const { data, error } = await db.auth.signInWithPassword({
-      email,
-      password
-    });
+ if(serviceForms[code])return serviceForms[code];
 
-    if (error) throw error;
+ if(name.includes("pan")&&name.includes("correction"))
+  return serviceForms.pan_correction;
 
-    if (!(await isAdmin(data.user))) {
-      await db.auth.signOut();
-      return message("Admin अनुमति नहीं है");
-    }
+ if(name.includes("pan"))
+  return serviceForms.new_pan;
 
-    document.getElementById("password").value = "";
-    show("dashboard");
-    message("Admin Login सफल!");
-  } catch (error) {
-    message("Login Error: " + error.message);
-  }
+ if(name.includes("ayushman"))
+  return serviceForms.ayushman;
+
+ if(name.includes("voter"))
+  return serviceForms.new_voter;
+
+ if(name.includes("dl")&&name.includes("pdf"))
+  return serviceForms.dl_pdf;
+
+ if(name.includes("chassis"))
+  return serviceForms.chassis_rc;
+
+ if(name.includes("engine"))
+  return serviceForms.engine_rc;
+
+ if(name.includes("ration"))
+  return [
+   ...commonCustomer,
+   ["Ration Card Number","text","ration_number"],
+   ["Aadhaar Number (if required)","text","aadhaar_number"],
+   ["Additional Details","textarea","details"]
+  ];
+
+ if(name.includes("aadhaar"))
+  return [
+   ...commonCustomer,
+   ["Aadhaar Number","text","aadhaar_number"],
+   ["Additional Details","textarea","details"]
+  ];
+
+ return [
+  ...commonCustomer,
+  ["Application / Reference Number","text","reference_number"],
+  ["Additional Details","textarea","details"]
+ ];
 }
 
-async function forgotPassword() {
-  if (!db) return message("Connection Error");
+/* CREATE FORM FIELDS */
+function createField(definition){
+ const [labelText,type,name,options]=definition;
 
-  const email = document.getElementById("email").value.trim();
+ const wrapper=document.createElement("div");
+ const label=document.createElement("label");
+ label.className="field-label";
+ label.textContent=labelText;
 
-  if (!email) {
-    return message("पहले Admin Email डालें");
-  }
+ let input;
 
-  try {
-    const redirectTo =
-      window.location.origin + window.location.pathname;
+ if(type==="textarea"){
+  input=document.createElement("textarea");
+  input.rows=3;
+ }else if(type==="select"){
+  input=document.createElement("select");
+  const first=document.createElement("option");
+  first.value="";
+  first.textContent="Select "+labelText;
+  input.appendChild(first);
 
-    if (!redirectTo.startsWith("https://")) {
-      return message("ऑनलाइन HTTPS वेबसाइट से Password Reset करें");
-    }
-
-    const { error } = await db.auth.resetPasswordForEmail(email, {
-      redirectTo
-    });
-
-    if (error) throw error;
-
-    message("Reset लिंक भेजने का अनुरोध सफल। Email चेक करें।");
-  } catch (error) {
-    message("Reset Error: " + error.message);
-  }
-}
-
-async function updatePassword() {
-  if (!db) return message("Connection Error");
-
-  const password = document.getElementById("newPassword").value;
-  const confirm = document.getElementById("confirmPassword").value;
-
-  if (password.length < 8) {
-    return message("Password कम से कम 8 अक्षर का रखें");
-  }
-
-  if (password !== confirm) {
-    return message("दोनों Password एक जैसे नहीं हैं");
-  }
-
-  try {
-    const { data, error: userError } = await db.auth.getUser();
-    if (userError || !data.user) {
-      throw new Error("Reset लिंक दोबारा खोलें");
-    }
-
-    if (!(await isAdmin(data.user))) {
-      throw new Error("Admin अनुमति नहीं है");
-    }
-
-    const { error } = await db.auth.updateUser({
-      password
-    });
-
-    if (error) throw error;
-
-    document.getElementById("newPassword").value = "";
-    document.getElementById("confirmPassword").value = "";
-
-    show("dashboard");
-    message("Password बदल गया!");
-  } catch (error) {
-    message("Password Error: " + error.message);
-  }
-}
-
-async function logout() {
-  if (!db) return;
-
-  const { error } = await db.auth.signOut();
-
-  if (error) {
-    return message("Logout Error: " + error.message);
-  }
-
-  show("login");
-  message("Logout सफल!");
-}
-
-async function checkSession() {
-  if (!db) return;
-
-  try {
-    const { data } = await db.auth.getUser();
-
-    if (!data.user) {
-      show("login");
-      return;
-    }
-
-    if (await isAdmin(data.user)) {
-      show("dashboard");
-    } else {
-      await db.auth.signOut();
-      show("login");
-    }
-  } catch (error) {
-    show("login");
-    message("Session Error: " + error.message);
-  }
-}
-
-if (db) {
-  db.auth.onAuthStateChange((event) => {
-    if (event === "PASSWORD_RECOVERY") {
-      show("reset");
-      message("नया Password डालें");
-    }
+  (options||[]).forEach(value=>{
+   const option=document.createElement("option");
+   option.value=value;
+   option.textContent=value;
+   input.appendChild(option);
   });
+ }else{
+  input=document.createElement("input");
+  input.type=type;
 
-  if (window.location.hash.includes("type=recovery")) {
-    show("reset");
-  } else {
-    checkSession();
+  if(type==="file"){
+   input.accept="image/jpeg,image/png,image/webp,application/pdf";
   }
+ }
+
+ input.name=name;
+ input.id="field_"+name;
+ input.required=true;
+
+ if(type==="file"){
+  input.addEventListener("change",()=>{
+   const file=input.files[0];
+   if(file&&file.size>5*1024*1024){
+    alert("File 5 MB से छोटी होनी चाहिए।");
+    input.value="";
+   }
+  });
+ }
+
+ label.htmlFor=input.id;
+ wrapper.append(label,input);
+ return wrapper;
 }
+
+/* OPEN AVAILABLE SERVICE */
+function openService(service){
+ if(!isAvailable(service)){
+  message("यह Service अभी Coming Soon है।",true);
+  return;
+ }
+
+ selectedService=service;
+
+ $("selectedServiceName").textContent=service.service_name;
+ $("selectedServiceRate").textContent=
+  "Service Rate: ₹"+(Number(service.rate_paise||0)/100).toFixed(2);
+
+ const fields=$("serviceFields");
+ fields.innerHTML="";
+
+ const definitions=getServiceFields(service);
+ definitions.forEach(def=>{
+  fields.appendChild(createField(def));
+ });
+
+ $("serviceForm").reset();
+ $("formTestResult").textContent="";
+ showSection("serviceDetails");
+ message("");
+}
+
+/* FORM TEST ONLY - NO DATABASE INSERT */
+$("serviceForm").addEventListener("submit",function(event){
+ event.preventDefault();
+
+ if(!selectedService)return;
+
+ if(!this.reportValidity())return;
+
+ const inputs=this.querySelectorAll("input,select,textarea");
+
+ for(const input of inputs){
+  if(input.type==="file"&&input.files.length){
+   const file=input.files[0];
+   if(file.size>5*1024*1024){
+    $("formTestResult").textContent="File 5 MB से छोटी होनी चाहिए।";
+    return;
+   }
+  }
+ }
+
+ $("formTestResult").textContent=
+  "✓ Form Test Successful! "+selectedService.service_name+
+  " का फॉर्म सही खुल रहा है और जरूरी जानकारी भरी गई है।"+
+  " यह केवल टेस्ट है। कोई आवेदन जमा नहीं हुआ और Wallet से पैसे नहीं कटे।";
+
+ $("formTestResult").style.color="#166534";
+});
+
+/* PAYMENT REQUEST */
+async function submitPayment(){
+ if(!currentUser){
+  message("पहले Login करें।",true);
+  return;
+ }
+
+ const amount=Number($("payAmount").value);
+ const utr=$("payUtr").value.trim();
+ const file=$("payScreenshot").files[0];
+
+ if(!Number.isSafeInteger(amount)||amount<1||amount>1000000){
+  message("सही Amount डालें।",true);
+  return;
+ }
+
+ if(!utr||!file){
+  message("UTR और Payment Screenshot जरूरी हैं।",true);
+  return;
+ }
+
+ const allowedTypes=["image/jpeg","image/png","image/webp"];
+
+ if(!allowedTypes.includes(file.type)){
+  message("Screenshot JPG, PNG या WebP होना चाहिए।",true);
+  return;
+ }
+
+ if(file.size>5*1024*1024){
+  message("Screenshot 5 MB से छोटा होना चाहिए।",true);
+  return;
+ }
+
+ const btn=$("paySubmitBtn");
+ btn.disabled=true;
+ btn.textContent="Submitting...";
+
+ try{
+  const extension=
+   file.type==="image/png"?"png":
+   file.type==="image/webp"?"webp":"jpg";
+
+  const filename=
+   currentUser.id+"/"+crypto.randomUUID()+"."+extension;
+
+  const {error:uploadError}=await supabaseClient.storage
+   .from("payment-screenshots")
+   .upload(filename,file,{
+    contentType:file.type,
+    upsert:false
+   });
+
+  if(uploadError)throw uploadError;
+
+  const {error:insertError}=await supabaseClient
+   .from("payment_requests")
+   .insert({
+    user_id:currentUser.id,
+    amount_paise:amount*100,
+    utr:utr,
+    screenshot_path:filename,
+    status:"pending"
+   });
+
+  if(insertError)throw insertError;
+
+  message("Payment Request जमा हो गई। Admin Verification के बाद Wallet में पैसे जुड़ेंगे।");
+
+  $("payAmount").value="";
+  $("payUtr").value="";
+  $("payScreenshot").value="";
+
+ }catch(e){
+  message("Payment Request Error: "+e.message,true);
+ }finally{
+  btn.disabled=false;
+  btn.textContent="Submit Payment Request";
+ }
+}
+
+/* MY APPLICATIONS */
+async function loadApplications(){
+ const list=$("applicationList");
+
+ if(!currentUser){
+  list.textContent="Login Required";
+  return;
+ }
+
+ list.textContent="Loading...";
+
+ const {data,error}=await supabaseClient
+  .from("service_applications")
+  .select("id,service_name,customer_name,status,created_at")
+  .eq("retailer_id",currentUser.id)
+  .order("created_at",{ascending:false})
+  .limit(30);
+
+ if(error){
+  list.textContent="Applications Load Error: "+error.message;
+  return;
+ }
+
+ if(!data||!data.length){
+  list.textContent="अभी कोई Application नहीं है।";
+  return;
+ }
+
+ list.innerHTML="";
+
+ for(const app of data){
+  const item=document.createElement("div");
+  item.className="box";
+
+  const title=document.createElement("h3");
+  title.textContent=app.service_name||"Service";
+
+  const customer=document.createElement("p");
+  customer.textContent="Customer: "+(app.customer_name||"-");
+
+  const status=document.createElement("p");
+  status.textContent="Status: "+(app.status||"Pending");
+
+  const button=document.createElement("button");
+  button.textContent="Download PDF";
+  button.onclick=()=>downloadSlip(app.id);
+
+  item.append(title,customer,status,button);
+  list.appendChild(item);
+ }
+}
+
+/* DOWNLOAD ADMIN UPLOADED PDF */
+async function downloadSlip(applicationId){
+ try{
+  const {data,error}=await supabaseClient
+   .from("application_slips")
+   .select("file_path")
+   .eq("application_id",applicationId)
+   .maybeSingle();
+
+  if(error)throw error;
+
+  if(!data?.file_path){
+   message("Admin ने अभी PDF अपलोड नहीं की है।",true);
+   return;
+  }
+
+  const {data:linkData,error:linkError}=await supabaseClient.storage
+   .from("application-slips")
+   .createSignedUrl(data.file_path,60);
+
+  if(linkError)throw linkError;
+
+  window.open(linkData.signedUrl,"_blank","noopener,noreferrer");
+
+ }catch(e){
+  message("PDF Error: "+e.message,true);
+ }
+}
+
+/* PHONEPE QR */
+function checkPhonePeQR(){
+ const qr=$("phonepeQR");
+ const qrError=$("qrError");
+
+ qr.onerror=function(){
+  qr.style.display="none";
+  qrError.style.display="block";
+ };
+
+ qr.onload=function(){
+  qr.style.display="block";
+  qrError.style.display="none";
+ };
+
+ if(qr.complete&&qr.naturalWidth===0){
+  qr.onerror();
+ }
+}
+
+/* START WEBSITE */
+async function start(){
+ checkPhonePeQR();
+
+ if(!checkClient())return;
+
+ const {data,error}=await supabaseClient.auth.getUser();
+
+ if(error)console.error(error);
+
+ if(data?.user){
+  currentUser=data.user;
+  await openDashboard();
+ }else{
+  showLogin();
+ }
+}
+
+window.addEventListener("load",start);
 </script>
 </body>
 </html>
